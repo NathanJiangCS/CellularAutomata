@@ -68,6 +68,8 @@ public class Grid extends Applet implements ActionListener{
 		initY.setLocation(750,160);
 		initX.setSize(70, 20);
 		initY.setSize(70, 20);
+		newGen.setLocation(680, 400);
+		newGen.setSize(140, 50);
 
 		//draw the cells 
 		g.fillRect(cellInitX, cellInitY, cellSize, cellSize);
