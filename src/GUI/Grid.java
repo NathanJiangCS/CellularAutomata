@@ -116,6 +116,15 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 			newGen.setLocation(680, 200);
 			newGen.setSize(140, 50);
 
+			for (int x=0; x<20; x++){
+				for (int y=0; y<20; y++){
+					//if a cell in the grid array is set to 1 from clicking then a rectangle will be drawn at that location
+					if (newArray[x][y] == 1){
+						g.setColor(sqColor);
+						g.fillRect(x*30, y*30, cellSize, cellSize);
+					}
+				}
+			}
 
 		}
 	}
@@ -148,8 +157,7 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 			confirm.setLocation(-150,0);
 			state = 2;
 			cellGenerator = new CellGenerator(initArray);
-			
-			newArray = cellGenerator.generateNextByNumAlive(1);
+						newArray = cellGenerator.generateNextByNumAlive(1);
 
 		}
 
@@ -158,6 +166,8 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 
 			//get the cells adjacent and set coordinates to be drawn
 			//call repaint to draw new cells
+					newArray = cellGenerator.generateNextByNumAlive(1);
+			
 		}
 
 		//initial cell choosing
