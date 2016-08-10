@@ -55,11 +55,7 @@ public class CellGenerator {
 					}
 				}
 				
-<<<<<<< HEAD
 				//Game of Life algorithm
-=======
-				
->>>>>>> origin/master
 				if(numalive == numAlive){
 					cellset[i][j] = 1;
 				}

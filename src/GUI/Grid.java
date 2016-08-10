@@ -163,7 +163,7 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 			state = 2;
 			
 			cellGenerator = new CellGenerator(initArray);
-			newArray = cellGenerator.generateNextByNumAlive(Integer.parseInt(numAdj.getText()));
+			newArray = cellGenerator.generateNextByNumAlive(Integer.valueOf(numAdj.getText().trim()));
 
 		}
 
