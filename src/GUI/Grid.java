@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import algorithms.CellGenerator;
 import java.awt.event.MouseEvent;
 import java.applet.*;
 
@@ -23,7 +24,12 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 	int cellInitX; //initial x coordinate of cell
 	int cellInitY; //initial y coordinate of cell
 
-	int[][] gridArray = new int [20][20]; //grid storage
+	CellGenerator cellGenerator;
+	
+	int[][] initArray = new int [20][20]; //initial grid
+	int[][] newArray = new int [20][20]; //started grid
+
+	//CellGenerator cellGenerator = new CellGenerator (gridArray);
 
 	Button confirm; //button to confirm parameters
 	Button newGen; //button to calculate new generation and draw next gen of cells
@@ -34,12 +40,12 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 	private Image dbImage; //used for double buffering
 	private Graphics dbg; //used for double buffering
 
-	int gameState;  //0 = startup+help, 1 = initialization, 2 = confirmed + started 
+	int state;  //0 = startup+help, 1 = initialization, 2 = confirmed + started 
 
 	//initialization of state variables
 	public void init(){
 
-		gameState = 0;
+		state = 0;
 
 		isMousePressed = false; //mouse unpressed by default
 		addMouseListener (this); //add mouse and motion listener
@@ -83,33 +89,34 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 		}
 
 		//before anything has been pressed, opening state
-		if (gameState == 0){
+		if (state == 0){
 			confirm.setLocation (700,200);
 			confirm.setSize(100, 50);
 		}
 
 
 		//if the game is in initialization state
-		if (gameState == 1){
+		if (state == 1){
 
 			//scroll through every cell in the 20x20 array
 			for (int x=0; x<20; x++){
 				for (int y=0; y<20; y++){
 					//if a cell in the grid array is set to 1 from clicking then a rectangle will be drawn at that location
-					if (gridArray[x][y] == 1){
+					if (initArray[x][y] == 1){
 						g.setColor(sqColor);
 						g.fillRect(x*30, y*30, cellSize, cellSize);
 					}
-
 				}
 			}
-
 		}
 
-		//once the confirm button has been hit gameState will be 2 and game has started
-		if (gameState == 2){
+
+		//once the confirm button has been hit state will be 2 and simulation has started
+		if (state == 2){
 			newGen.setLocation(680, 200);
 			newGen.setSize(140, 50);
+
+
 		}
 	}
 
@@ -139,10 +146,10 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 		if (evt.getSource()==confirm){
 			add(newGen);
 			confirm.setLocation(-150,0);
-			gameState = 2;
-			//confirm the cells in grid array which are deemed alive (1) and how many cells
-			//are alive in the next generation adjacent to those initial cells
-
+			state = 2;
+			new CellGenerator(initArray);
+			
+			 newArray = CellGenerator.generateNextByNumAlive(1);
 
 		}
 
@@ -196,22 +203,23 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 	public void mousePressed(MouseEvent e) {
 		isMousePressed = true;
 
-		if (gameState == 0 || gameState == 1){
+		//you can only add and remove cells during initialization states
+		if (state == 0 || state == 1){
 			//the cell number in the array is the mouse location divided by cell size
 			cellInitX = mx/cellSize;
 			cellInitY = my/cellSize;
 
 			//if the selected cell is dead (0), select to be alive (1)
-			if ((mx<=600 && my<=600) && gridArray[cellInitX][cellInitY] == 0){
-				//set the gameState to initialization state
-				gameState = 1;
+			if ((mx<=600 && my<=600) && initArray[cellInitX][cellInitY] == 0){
+				//set the state to initialization state
+				state = 1;
 				//add this cell to the grid
-				gridArray[cellInitX][cellInitY] = 1;
+				initArray[cellInitX][cellInitY] = 1;
 			}
 			//if the selected cell is alive (1), unselect it to be dead (0)
-			else if ((mx<=600 && my<=600) && gridArray[cellInitX][cellInitY] == 1){
+			else if ((mx<=600 && my<=600) && initArray[cellInitX][cellInitY] == 1){
 				//remove this cell from the grid
-				gridArray[cellInitX][cellInitY] = 0;
+				initArray[cellInitX][cellInitY] = 0;
 			}
 		}
 
