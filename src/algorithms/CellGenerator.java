@@ -6,7 +6,7 @@ public class CellGenerator {
 	
 	//default all dead cells
 	public CellGenerator(){
-		cells = new int[10][10];
+		cells = new int[20][20];
 		for(int i = 0; i < cells.length;i++){
 			for(int j = 0; j < cells.length; j++){
 				cells[i][j] = 0;
@@ -23,7 +23,7 @@ public class CellGenerator {
 	public int[][] generateNextByNumAlive(int numAlive){
 		
 		//generate empty dataset of cells to be returned
-		int[][] cellset = new int[10][10];
+		int[][] cellset = new int[20][20];
 		for(int i = 0; i < cellset.length; i ++){
 			for(int j = 0; j < cellset.length; j++){
 				cellset[i][j] = 0;
@@ -35,17 +35,17 @@ public class CellGenerator {
 				int numalive = 0;
 				int[][] checkcell = new int[4][2];
 				//check up adjacent
-				checkcell[0][0] = i-1 >= 0 ?i-1 : 9;
+				checkcell[0][0] = i-1 >= 0 ?i-1 : 19;
 				checkcell[0][1] = j;
 				//check down adjacent
-				checkcell[1][0] = i+1 <= 9?i+1 : 0;
+				checkcell[1][0] = i+1 <= 19?i+1 : 0;
 				checkcell[1][1] = j;
 				//check left adjacent
 				checkcell[2][0] = i;
-				checkcell[2][1] = j-1 >= 0?j-1 : 9;
+				checkcell[2][1] = j-1 >= 0?j-1 : 19;
 				//check right adjacent
 				checkcell[3][0] = i;
-				checkcell[3][1] = j+1 <= 9?j+1 : 0;
+				checkcell[3][1] = j+1 <= 19?j+1 : 0;
 				
 				//check co-ordinates
 				for(int k = 0; k < 4; k++){
