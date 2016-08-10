@@ -147,9 +147,9 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 			add(newGen);
 			confirm.setLocation(-150,0);
 			state = 2;
-			new CellGenerator(initArray);
+			cellGenerator = new CellGenerator(initArray);
 			
-			 newArray = CellGenerator.generateNextByNumAlive(1);
+			newArray = cellGenerator.generateNextByNumAlive(1);
 
 		}
 
