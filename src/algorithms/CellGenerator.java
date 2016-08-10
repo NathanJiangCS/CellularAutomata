@@ -62,6 +62,7 @@ public class CellGenerator {
 				
 			}
 		}
+		cells = cellset;
 		return cellset;
 	}
 	
