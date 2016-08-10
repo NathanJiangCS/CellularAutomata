@@ -40,7 +40,7 @@ public class Grid extends Applet implements ActionListener{
 		initY = new TextField ("Cell Initial Y");
 		
 		confirm.addActionListener(this); //confirm button action listener
-		
+		newGen.addActionListener(this); //new generation button listener
 		add (confirm); //draw the confirm button
 		add (adjAlive); //draw the adjAlive textfield
 		add (newGen); //draw the next generation button
@@ -122,6 +122,13 @@ public class Grid extends Applet implements ActionListener{
 			adjacentCells = Integer.parseInt(adjAlive.getText());
 			cellInitX = Integer.parseInt(initX.getText());
 			cellInitY = Integer.parseInt(initY.getText());
+		}
+		
+		//if the new generation button is pressed
+		if (evt.getSource()==newGen){
+			
+			//get the cells adjacent and set coordinates to be drawn
+			//call repaint to draw new cells
 		}
 		
 		repaint(); 
