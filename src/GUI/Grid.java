@@ -57,7 +57,7 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 		addMouseMotionListener (this);
 
 		confirm = new Button ("Confirm"); //create confirm button object
-		newGen = new Button ("Generate next generation");
+		newGen = new Button ("Next Generation");
 		numAdj = new TextField ("1-4");
 		reset = new Button ("Reset");
 
