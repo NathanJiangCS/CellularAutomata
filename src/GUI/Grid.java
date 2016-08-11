@@ -5,8 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.Arrays;
-
 import algorithms.CellGenerator;
 import java.awt.event.MouseEvent;
 import java.applet.*;
@@ -171,7 +169,6 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 			numAlive = Integer.parseInt(numAdj.getText());
 			cellGenerator = new CellGenerator(initArray);
 			newArray = cellGenerator.generateNextByNumAlive(numAlive);
-
 		}
 
 		//if the new generation button is pressed
