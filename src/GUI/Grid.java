@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.Arrays;
+
 import algorithms.CellGenerator;
 import java.awt.event.MouseEvent;
 import java.applet.*;
@@ -33,6 +35,7 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 
 	Button confirm; //button to confirm parameters
 	Button newGen; //button to calculate new generation and draw next gen of cells
+	Button reset; //reset the simulation
 	TextField numAdj; //enter num of cells alive
 
 	int numAlive; //the number of adjacent cells of initial cell
@@ -47,7 +50,6 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 	public void init(){
 
 		state = 0; 
-		numAlive = 2;
 
 		isMousePressed = false; //mouse unpressed by default
 		addMouseListener (this); //add mouse and motion listener
@@ -55,13 +57,16 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 
 		confirm = new Button ("Confirm"); //create confirm button object
 		newGen = new Button ("Generate next generation");
-		numAdj = new TextField (" ");
+		numAdj = new TextField ("1-4");
+		reset = new Button ("Reset");
 
 		confirm.addActionListener(this); //confirm button action listener
 		newGen.addActionListener(this); //new generation button listener
+		reset.addActionListener(this);
 
 		add (confirm); //draw the confirm button
 		add (numAdj);
+		add (reset);
 
 		appLength = 900; 
 		appWidth = 601;
@@ -97,6 +102,8 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 			confirm.setSize(100, 50);
 			numAdj.setLocation(700, 300);
 			numAdj.setSize(100, 20);
+			reset.setLocation(700,450);
+			reset.setSize(100,20);
 		}
 
 
@@ -161,9 +168,9 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 			add(newGen);
 			confirm.setLocation(-150,0);
 			state = 2;
-			
+			numAlive = Integer.parseInt(numAdj.getText());
 			cellGenerator = new CellGenerator(initArray);
-			newArray = cellGenerator.generateNextByNumAlive(Integer.parseInt(numAdj.getText()));
+			newArray = cellGenerator.generateNextByNumAlive(numAlive);
 
 		}
 
@@ -172,11 +179,23 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 
 			//get the cells adjacent and set coordinates to be drawn
 			//call repaint to draw new cells
-			newArray = cellGenerator.generateNextByNumAlive(1);
+			newArray = cellGenerator.generateNextByNumAlive(numAlive);
 
 		}
 
-		//initial cell choosing
+		//if the reset button is pressed
+		if (evt.getSource()==reset){
+			//set to initial app parameters 
+			newGen.setLocation(-150,0);
+			confirm.setLocation(700,200);
+			state=0;
+			//empty the textfields
+			numAdj.setText("1-4");
+			//empty existing array of cells
+			initArray = clearArray(initArray);
+			newArray = clearArray(newArray);
+
+		}
 
 		repaint(); 
 
@@ -247,6 +266,17 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 	public void mouseReleased(MouseEvent e) {
 		isMousePressed = false;
 		e.consume ();
+	}
+
+	public int[][] clearArray (int[][] arr){
+		for (int i=0; i<20; i++){
+			for (int j=0; j<20; j++){
+				arr[i][j] = 0;
+			}
+		}
+
+		return arr;
+
 	}
 
 
