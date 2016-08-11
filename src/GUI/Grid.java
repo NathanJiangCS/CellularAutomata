@@ -1,15 +1,18 @@
 package gui;
 
-import java.awt.*;
+import java.applet.Applet;
+import java.awt.Button;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.InputMismatchException;
 
 import algorithms.CellGenerator;
-import java.awt.event.MouseEvent;
-import java.applet.*;
 
 @SuppressWarnings("serial")
 public class Grid extends Applet implements ActionListener, MouseListener, MouseMotionListener{
@@ -116,6 +119,7 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 			//scroll through every cell in the 20x20 array
 			for (int x=0; x<20; x++){
 				for (int y=0; y<20; y++){
+					
 					//if a cell in the grid array is set to 1 from clicking then a rectangle will be drawn at that location
 					if (initArray[x][y] == 1){
 						g.setColor(sqColor);
@@ -214,14 +218,17 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 
 		//if the reset button is pressed
 		if (evt.getSource()==reset){
+			
 			//set to initial app parameters 
 			newGen.setLocation(-150,0);
 			confirm.setLocation(700,200);
 			numAdj.setLocation(700, 300);
 			state=0;
 			varTypeException = false;
+			
 			//empty the textfields
 			numAdj.setText("1-4");
+			
 			//empty existing array of cells
 			initArray = clearArray(initArray);
 			newArray = clearArray(newArray);
