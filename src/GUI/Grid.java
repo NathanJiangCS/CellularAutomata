@@ -65,7 +65,7 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 		add (confirm); //draw the confirm button
 		add (numAdj);
 		add (reset);
-
+		
 		appLength = 900; 
 		appWidth = 601;
 
@@ -74,6 +74,8 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 
 		setBackground(bgColor);
 		setSize (appLength, appWidth);
+		
+		
 	}
 
 	//graphics
@@ -204,8 +206,7 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 		// called during motion when no buttons are down
 		mx = e.getX ();
 		my = e.getY ();
-		//show the position at which the mouse is at
-		showStatus ("Mouse at (" + mx + "," + my + ")");
+		
 		//repaint position of mouse
 		repaint ();
 		e.consume ();
