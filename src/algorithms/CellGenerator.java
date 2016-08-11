@@ -51,7 +51,6 @@ public class CellGenerator {
 				for(int k = 0; k < 4; k++){
 					if(cells[checkcell[k][0]][checkcell[k][1]] == 1){
 						numalive += 1;
-						System.out.println(checkcell[k][0] + " " + checkcell[k][1] + " is alive.");
 					}
 				}
 				
