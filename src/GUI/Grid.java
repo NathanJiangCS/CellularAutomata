@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.InputMismatchException;
+
 import algorithms.CellGenerator;
 import java.awt.event.MouseEvent;
 import java.applet.*;
@@ -43,6 +45,7 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 	private Graphics dbg; //used for double buffering
 
 	int state;  //0 = startup+help, 1 = initialization, 2 = confirmed + started 
+	Boolean varTypeException = false;
 
 	//initialization of state variables
 	public void init(){
@@ -123,8 +126,17 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 
 		//once the confirm button has been hit state will be 2 and simulation has started
 		if (state == 2){
+			//relocate the new generation button
 			newGen.setLocation(680, 200);
 			newGen.setSize(140, 50);
+
+			//tells the user's input
+			if (varTypeException){
+				g.drawString ("Invalid Input - Default: 1", 690, 295);
+			}
+			else 
+				g.drawString("Input: "+numAlive, 740, 295);
+
 
 			for (int x=0; x<20; x++){
 				for (int y=0; y<20; y++){
@@ -163,11 +175,29 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 
 		//if the confirm button is pressed
 		if (evt.getSource()==confirm){
+			//check the input of the textfield
+			try{
+				//get the info from numAdj textfield
+				numAlive = Integer.parseInt(numAdj.getText());
+			}
+			catch(NumberFormatException e){
+				varTypeException = true;
+			}
+		
+			//add new gen button and relocate confirm button, change state
 			add(newGen);
 			confirm.setLocation(-150,0);
 			state = 2;
-			numAlive = Integer.parseInt(numAdj.getText());
+			numAdj.setLocation(-150, 0);
+			//create new cellGenerator object
 			cellGenerator = new CellGenerator(initArray);
+			//if textfield input is 1-4, execute with specified parameter
+			if (numAlive==1||numAlive==2||numAlive==3||numAlive==4){
+				newArray = cellGenerator.generateNextByNumAlive(numAlive);
+			}
+			//if any other input is entered in textfield, numAlive will default to 1
+			else
+				numAlive = 1;
 			newArray = cellGenerator.generateNextByNumAlive(numAlive);
 		}
 
@@ -185,7 +215,9 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 			//set to initial app parameters 
 			newGen.setLocation(-150,0);
 			confirm.setLocation(700,200);
+			numAdj.setLocation(700, 300);
 			state=0;
+			varTypeException = false;
 			//empty the textfields
 			numAdj.setText("1-4");
 			//empty existing array of cells
@@ -275,6 +307,7 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 		return arr;
 
 	}
+
 
 
 }
