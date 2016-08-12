@@ -2,6 +2,9 @@
 
 A program which emulates cellular automata. Created with JAVA and HTML, using JApplet and JFrame.
 
+# Special Thanks
+### Maximilian Saar
+
 # Features
 ###- Double buffering & rendering
 ###- Applet rendering
@@ -10,3 +13,4 @@ A program which emulates cellular automata. Created with JAVA and HTML, using JA
 # Algorithms
 
 ###-Calculates by adjacent cells alive/dead (1-4)
+
