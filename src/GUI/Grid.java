@@ -202,9 +202,10 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 				newArray = cellGenerator.generateNextByNumAlive(numAlive);
 			}
 			//if any other input is entered in textfield, numAlive will default to 1
-			else
+			else {
 				numAlive = 1;
-			newArray = cellGenerator.generateNextByNumAlive(numAlive);
+				newArray = cellGenerator.generateNextByNumAlive(numAlive);
+			}
 		}
 
 		//if the new generation button is pressed
