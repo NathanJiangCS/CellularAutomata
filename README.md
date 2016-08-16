@@ -1,4 +1,4 @@
-# CellularAutomata - By: Vincent Hang and Edmond Lu
+# CellularAutomata
 
 A program which emulates cellular automata. Created with JAVA and HTML, using JApplet and JFrame.
 
