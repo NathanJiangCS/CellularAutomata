@@ -39,6 +39,7 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 	Button confirm; //button to confirm parameters
 	Button newGen; //button to calculate new generation and draw next gen of cells
 	Button reset; //reset the simulation
+    Button skipFive; //Skips 5 generations
 	TextField numAdj; //enter num of cells alive
 
 	int numAlive; //the number of adjacent cells of initial cell
@@ -61,12 +62,14 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 
 		confirm = new Button ("Confirm"); //create confirm button object
 		newGen = new Button ("Next Generation");
+        skipFive = new Button ("Skip Five Generations");
 		numAdj = new TextField ("1-4");
 		reset = new Button ("Reset");
 
 		confirm.addActionListener(this); //confirm button action listener
 		newGen.addActionListener(this); //new generation button listener
 		reset.addActionListener(this);
+                skipFive.addActionListener(this);
 
 		add (confirm); //draw the confirm button
 		add (numAdj);
@@ -135,7 +138,8 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 			//relocate the new generation button
 			newGen.setLocation(680, 200);
 			newGen.setSize(140, 50);
-
+            skipFive.setLocation(680, 270);
+            skipFive.setSize(140, 50);
 			//tells the user's input
 			if (varTypeException){
 				g.drawString ("Invalid Input - Default: 1", 690, 295);
@@ -192,6 +196,7 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 		
 			//add new gen button and relocate confirm button, change state
 			add(newGen);
+            add(skipFive); //Add skip 5 generation button
 			confirm.setLocation(-150,0);
 			state = 2;
 			numAdj.setLocation(-150, 0);
@@ -216,12 +221,20 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 			newArray = cellGenerator.generateNextByNumAlive(numAlive);
 
 		}
+        if (evt.getSource()==skipFive){
+            
+            for (int i=0; i<5; i++){
+                newArray = cellGenerator.generateNextByNumAlive(numAlive);
+            }
+            
+        }
 
 		//if the reset button is pressed
 		if (evt.getSource()==reset){
 			
 			//set to initial app parameters 
 			newGen.setLocation(-150,0);
+            skipFive.setLocation(-200,0);
 			confirm.setLocation(700,200);
 			numAdj.setLocation(700, 300);
 			state=0;
