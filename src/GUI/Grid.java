@@ -6,11 +6,14 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.TextField;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+
+import java.lang.String;
 
 import algorithms.CellGenerator;
 
@@ -39,10 +42,12 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 	Button confirm; //button to confirm parameters
 	Button newGen; //button to calculate new generation and draw next gen of cells
 	Button reset; //reset the simulation
-    Button skipFive; //Skips 5 generations
+        Button skipFive; //Skips 5 generations
 	TextField numAdj; //enter num of cells alive
+        Label iterationCounter; //Text to indicate the current iteration
 
 	int numAlive; //the number of adjacent cells of initial cell
+        int iterationNum; //Current Generation. Starts on 0
 	int cellSize = 30; //how many pixels wide/long each cell is
 
 	private Image dbImage; //used for double buffering
@@ -55,16 +60,18 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 	public void init(){
 
 		state = 0; 
-
+                iterationNum = 0;
+                
 		isMousePressed = false; //mouse unpressed by default
 		addMouseListener (this); //add mouse and motion listener
 		addMouseMotionListener (this);
 
 		confirm = new Button ("Confirm"); //create confirm button object
 		newGen = new Button ("Next Generation");
-        skipFive = new Button ("Skip Five Generations");
+                skipFive = new Button ("Skip Five Generations");
 		numAdj = new TextField ("1-4");
 		reset = new Button ("Reset");
+                iterationCounter = new Label(String.format("Generation Number: %d", iterationNum));
 
 		confirm.addActionListener(this); //confirm button action listener
 		newGen.addActionListener(this); //new generation button listener
@@ -74,6 +81,7 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 		add (confirm); //draw the confirm button
 		add (numAdj);
 		add (reset);
+                add (iterationCounter);
 		
 		appLength = 900; 
 		appWidth = 601;
@@ -84,6 +92,7 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 		setBackground(bgColor);
 		setSize (appLength, appWidth);
 		
+                
 		
 	}
 
@@ -113,6 +122,11 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 			numAdj.setSize(100, 20);
 			reset.setLocation(700,450);
 			reset.setSize(100,20);
+                        iterationNum = 0;
+                        iterationCounter.setLocation(690, 150);
+                        iterationCounter.setSize(150, 50);
+                        
+                        iterationCounter.setText(String.format("Generation Number: %d", iterationNum));
 		}
 
 
@@ -138,8 +152,15 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 			//relocate the new generation button
 			newGen.setLocation(680, 200);
 			newGen.setSize(140, 50);
-            skipFive.setLocation(680, 270);
-            skipFive.setSize(140, 50);
+                        skipFive.setLocation(680, 270);
+                        skipFive.setSize(140, 50);
+                        
+                        //iterationCounter = new Label(String.format("Generation Number: %d", iterationNum));
+                        //add (iterationCounter);
+                        //iterationCounter.setLocation(690, 150);
+                        //iterationCounter.setSize(150, 50);
+                        iterationCounter.setText(String.format("Generation Number: %d", iterationNum));
+                        
 			//tells the user's input
 			if (varTypeException){
 				g.drawString ("Invalid Input - Default: 1", 690, 295);
@@ -193,10 +214,13 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 			catch(NumberFormatException e){
 				varTypeException = true;
 			}
-		
+                        
+                        //Increase the iteration number
+                        iterationNum += 1;
+                        
 			//add new gen button and relocate confirm button, change state
 			add(newGen);
-            add(skipFive); //Add skip 5 generation button
+                        add(skipFive); //Add skip 5 generation button
 			confirm.setLocation(-150,0);
 			state = 2;
 			numAdj.setLocation(-150, 0);
@@ -219,24 +243,27 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
 			//get the cells adjacent and set coordinates to be drawn
 			//call repaint to draw new cells
 			newArray = cellGenerator.generateNextByNumAlive(numAlive);
+                        iterationNum += 1;
 
 		}
-        if (evt.getSource()==skipFive){
-            
-            for (int i=0; i<5; i++){
-                newArray = cellGenerator.generateNextByNumAlive(numAlive);
-            }
-            
-        }
+                if (evt.getSource()==skipFive){
+
+                    for (int i=0; i<5; i++){
+                        newArray = cellGenerator.generateNextByNumAlive(numAlive);
+                    }
+                    iterationNum += 5;
+
+                }
 
 		//if the reset button is pressed
 		if (evt.getSource()==reset){
 			
 			//set to initial app parameters 
 			newGen.setLocation(-150,0);
-            skipFive.setLocation(-200,0);
+                        skipFive.setLocation(-200,0);
 			confirm.setLocation(700,200);
 			numAdj.setLocation(700, 300);
+                        iterationNum = 0;
 			state=0;
 			varTypeException = false;
 			
