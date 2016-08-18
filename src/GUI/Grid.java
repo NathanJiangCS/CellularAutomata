@@ -125,7 +125,7 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
                         iterationNum = 0;
                         iterationCounter.setLocation(690, 150);
                         iterationCounter.setSize(150, 50);
-                        
+                        //Reset the counter text
                         iterationCounter.setText(String.format("Generation Number: %d", iterationNum));
 		}
 
@@ -155,10 +155,7 @@ public class Grid extends Applet implements ActionListener, MouseListener, Mouse
                         skipFive.setLocation(680, 270);
                         skipFive.setSize(140, 50);
                         
-                        //iterationCounter = new Label(String.format("Generation Number: %d", iterationNum));
-                        //add (iterationCounter);
-                        //iterationCounter.setLocation(690, 150);
-                        //iterationCounter.setSize(150, 50);
+                        //Updating counter text
                         iterationCounter.setText(String.format("Generation Number: %d", iterationNum));
                         
 			//tells the user's input
