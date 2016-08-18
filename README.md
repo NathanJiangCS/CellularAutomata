@@ -3,7 +3,7 @@
 A program which emulates cellular automata. Created with JAVA and HTML, using JApplet and JFrame.
 
 # Special Thanks
-### Vincent Hang and Friends for letting me play around with this :)
+### Maximilian Saar for bug testing
 
 # Features
 ###- Double buffering & rendering
